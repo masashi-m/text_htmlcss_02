@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>hc_2.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="1-%E5%B1%9E%E6%80%A7">1. 属性</h1>
+<h2 id="%E2%97%86-%E5%89%8D%E5%9B%9E%E3%81%AE%E3%81%8A%E3%81%95%E3%82%89%E3%81%84">◆ 前回のおさらい</h2>
+<blockquote>
+<ul>
+<li>HTML の記述方法 (開始タグと終了タグ)</li>
+<li>CSS の記述方法 (セレクタとプロパティ)</li>
+<li>Web ページの構造と HTML タグ (DOCTYPE・html・head・body)</li>
+<li>ボックスモデル (margin, padding, border, width)</li>
+</ul>
+</blockquote>
+<br>
+<p>今回は、Web ページをより詳細に設定する技術を学んでいきます。<br>
+最初は <mark>id 属性</mark>と <mark>class 属性</mark>について学習していきましょう。</p>
+<br>
+<h2 id="%E2%97%86id-%E5%B1%9E%E6%80%A7%E3%81%A8-class-%E5%B1%9E%E6%80%A7">◆id 属性と class 属性</h2>
+<p>主に HTML タグと CSS プロパティを連携させる際に設定します。<br>
+これまでに学習した「a タグの href 属性」や 「img タグの src 属性」と異なり、<br>
+タグの種類に関わらず属性を指定します。</p>
+<br>
+<img src="id_class.png">
+<br>
+<h3 id="%E2%97%8Fid-%E5%B1%9E%E6%80%A7">●id 属性</h3>
+<p>id 属性は、ページ内で<mark>固有</mark>の名前を付けるための属性(識別子)です。<br>
+固有の属性のため、同ページ内で他のタグに対し同一の id 値を指定したり、<br>
+1 つの要素に複数の id 属性を付ける事ができません。<br>
+HTML での記述方法は以下の通りです。
+<br></p>
+<p>[html]</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"first"</span>&gt;</span>テキスト1<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"second"</span>&gt;</span>テキスト2<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<p>CSS で id 属性を指定する際は、<mark>#</mark>を付けて id 名を記述します。<br>
+また、セレクタ(タグ名)の記述は省略可能です。</p>
+<p>[CSS]</p>
+<pre class="hljs"><code><div><span class="hljs-selector-id">#first</span> {
+  <span class="hljs-attribute">color</span>: red;
+}
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 1-1</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+id 属性について記述していきましょう。まずは以下のURLから CodePenを開きます。<br>
+<a href="https://codepen.io/" target="_blank">CodePen</a><br>
+上記のコードをHTMLとCSSに記述し、表示結果を確認しましょう。
+</div>
+<p><br><br></p>
+<h3 id="%E2%97%8Fclass-%E5%B1%9E%E6%80%A7">●class 属性</h3>
+<p>id 属性と違い、class 属性は同ページ内で何度も使う事ができます。<br>
+また、半角スペースで区切る事で、複数の class を付与する事も可能です。</p>
+<p>[html]</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"first"</span>&gt;</span>テキスト1<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"first second"</span>&gt;</span>テキスト2<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"first second third"</span>&gt;</span>テキスト3<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<p>CSS で class 属性を指定する際は、<mark>.</mark>を付けて class 名を記述します。</p>
+<p>[CSS]</p>
+<pre class="hljs"><code><div><span class="hljs-selector-class">.first</span> {
+  <span class="hljs-attribute">font</span>: <span class="hljs-number">20px</span> sans-serif;
+  <span class="hljs-attribute">color</span>: blue;
+}
+<span class="hljs-selector-class">.second</span> {
+  <span class="hljs-attribute">background-color</span>: orange;
+}
+<span class="hljs-selector-class">.third</span> {
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">10px</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">30px</span>;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">5px</span> solid <span class="hljs-number">#000</span>;
+}
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 1-2</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードをHTMLとCSSに記述し、表示結果を確認しましょう。
+</div>
+<p><br><br></p>
+<h2 id="%E2%97%86div-%E3%82%BF%E3%82%B0%E3%81%A8%E3%81%AF">◆div タグとは</h2>
+<p>コンテンツを<mark>グループ化する</mark>タグです。div タグで<br>
+対象の要素を囲む事で、1 つのまとまりとしてグループ化できます。<br>
+※ div は 「区分・部分」の意味を持つ division の略称です。</p>
+<br>
+<h3 id="%E2%97%8F-%E5%B1%9E%E6%80%A7%E3%81%AE%E6%8C%87%E5%AE%9A">● 属性の指定</h3>
+<p>div タグで各要素をまとめる際は、id 属性や class 属性を指定して CSS を細かく設定します。</p>
+<p>[html]</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"all_property"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"p1_property"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>text1<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>text2<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>text3<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>contents<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"p2_property"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>text4<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>text5<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>text6<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p><br><br></p>
+<p>[CSS]</p>
+<pre class="hljs"><code><div><span class="hljs-selector-id">#all_property</span> {
+  <span class="hljs-attribute">color</span>: green;
+}
+<span class="hljs-selector-class">.p1_property</span> {
+  <span class="hljs-attribute">font</span>: <span class="hljs-number">20px</span> sans-serif;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">15px</span>;
+}
+<span class="hljs-selector-class">.p2_property</span> {
+  <span class="hljs-attribute">background-color</span>: pink;
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">30px</span>;
+}
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 1-3</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードを記述し、結果を表示させましょう。(コピペOK)<br>
+また、それぞれの div タグがどの範囲に適用されているか確認しましょう。
+</div>
+<br>
+<hr>
+<p>div タグは一部のテキストの色やフォントサイズを指定したり、<br>
+コンテンツを中央に移動させる際などに活躍します。<br>
+この後の章にも出て来ますので、少しずつ慣れていきましょう！</p>
+<p><br><br><br></p>
+<h1 id="2-emmethtml">2. Emmet(HTML)</h1>
+<h2 id="%E2%97%86emmet-%E3%81%A8%E3%81%AF">◆Emmet とは</h2>
+<p>HTML/CSS 等の<mark>入力補完機能</mark>を持つエディタ用プラグインです。<br>
+CodePen では最初から利用できますが、他のエディタを使う場合はプラグインが必要です。</p>
+<br>
+<h2 id="%E2%97%86html-%E3%82%BF%E3%82%B0">◆HTML タグ</h2>
+<p>それでは Emmet を学習していきましょう。Emmet にはいくつかの入力規則があり、<br>
+それを覚えると様々なパターンを入力できるようになります。</p>
+<h3 id="%E2%97%8Fid-%E5%B1%9E%E6%80%A7">●id 属性</h3>
+<p>id は 所定のタグの後に <mark>#</mark>を追記する事で指定できます。<br>
+下記コードの[ ]内を入力して Tab キーを押すと、補完内容が出力されます。</p>
+<pre class="hljs"><code><div>[p#]
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">""</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<p>タグを指定しない場合は div タグがデフォルトで設定されます。</p>
+<pre class="hljs"><code><div>[#]
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">""</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>また、#の後ろに属性名を続けて記述する事も可能です。</p>
+<pre class="hljs"><code><div>[p#first]
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"first"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 2-1</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">  
+上記のコードを参照し、各 Emmetを実行しましょう。
+</div>
+<p><br><br><br></p>
+<h3 id="%E2%97%8Fclass-%E5%B1%9E%E6%80%A7">●class 属性</h3>
+<p>class は タグの後ろに<mark>.</mark>を付ける事で指定できます。</p>
+<pre class="hljs"><code><div>[p.]
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">""</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<p>id 属性と同様に、タグを指定しない場合は div タグがデフォルトで設定されます。</p>
+<pre class="hljs"><code><div>[.]
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">""</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>id と同様に、.の後ろに属性名を続けて記述できます。</p>
+<pre class="hljs"><code><div>[p.first]
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"first"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 2-2</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">  
+上記のコードを参照し、各 Emmetを実行しましょう。
+</div>
+<br>
+<h3 id="%E2%97%8F-%E5%B1%9E%E6%80%A7%E3%81%AE%E4%B8%AD%E8%BA%AB">● 属性の中身</h3>
+<p>タグの後ろに<mark>[属性=指定の内容]</mark>を追記する事で、属性を指定できます。<br>
+(下記の例では、href 属性の後ろに target 属性が追加されています)</p>
+<pre class="hljs"><code><div>[a[target=_blank]] <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">""</span> <span class="hljs-attr">target_blank</span>=<span class="hljs-string">""</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+</div></code></pre>
+<br>
+<h3 id="%E2%97%8F-%E5%85%A5%E3%82%8C%E5%AD%90">● 入れ子</h3>
+<p>入れ子にするためには、タグとタグの間に<mark>&gt;</mark>を入れます。</p>
+<pre class="hljs"><code><div>[ul&gt;li]
+<span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+</div></code></pre>
+<br>
+<h3 id="%E2%97%8F-%E4%B8%A6%E5%88%97%E3%81%AE%E5%B1%95%E9%96%8B">● 並列の展開</h3>
+<p>同じ階層にタグを展開する場合は、<mark>+</mark>をタグの間に追記します。</p>
+<pre class="hljs"><code><div>[h1+p+a]
+<span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">""</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 2-3</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">  
+上記のコードを参照し、各 Emmetを実行しましょう。
+</div>
+<br>
+<h3 id="%E2%97%8F-%E8%A4%87%E8%A3%BD">● 複製</h3>
+<p>同じタグをまとめて記述するには、タグの後に<mark>*数字</mark>を追記します。</p>
+<pre class="hljs"><code><div>[p*3]
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<br>
+<h3 id="%E2%97%8F-%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%81%AE%E8%A8%98%E8%BF%B0">● コンテンツの記述</h3>
+<p>開始タグと終了タグの間にコンテンツを記述する場合は、<mark>{}</mark>を使います。</p>
+<pre class="hljs"><code><div>[p{text}]
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>text<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<br>
+<h3 id="%E2%97%8F-%E9%80%A3%E7%95%AA">● 連番</h3>
+<p>コンテンツを複製し、更に連番を付けたい場合は<mark>$</mark>を使います。
+<mark></mark></p>
+<pre class="hljs"><code><div>[p{test$}*3]
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>test1<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>test2<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>test3<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<br>
+<h3 id="%E2%97%8F-%E7%B5%84%E3%81%BF%E5%90%88%E3%82%8F%E3%81%9B">● 組み合わせ</h3>
+<p>これらの Emmet は、組み合わせて記述する事が可能です。その際は、<br>
+上記のルールを順番に並べる事で実行します。</p>
+<pre class="hljs"><code><div>[main&gt;ul#menu&gt;li*3]
+<span class="hljs-tag">&lt;<span class="hljs-name">main</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"menu"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">main</span>&gt;</span>
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 2-4</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">  
+上記のコードを参照し、各 Emmetを実行しましょう。
+</div>
+<br>
+<p>それでは復習を兼ねて、以下の演習に挑戦しましょう。</p>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 2-5</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">  
+以下の内容を入力後、結果を確認しましょう。また、変換する前に、出力結果を予想しましょう。<br>
+1. main#first<br>
+2. .container<br>
+3. a[target=_blank]<br>
+4. ul>.item*3<br>
+5. p{contents$}*5<br>
+6. .container>h1+ul>li{theame}*3<br>
+</div>
+<br>
+<br>
+<hr>
+<p>お疲れ様でした！本章はここまでです。<br>
+他にも Emmet はたくさんありますので、少しずつ慣れていきましょう。</p>
+<p><br><br><br></p>
+<h1 id="3-emmetcss">3. Emmet(CSS)</h1>
+<h2 id="%E2%97%86css-%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3">◆CSS プロパティ</h2>
+<p>CSS の Emmet は HTML とは異なり、プロパティの<mark>頭文字</mark>や<mark>中文字</mark>を記述します。また、<br>
+連続して数値を記述する事で、プロパティ値を指定可能です。コードを記述して感覚を掴みましょう。</p>
+<p>[html]</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"emmet01"</span>&gt;</span>テスト1<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"emmet02"</span>&gt;</span>テスト2<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"emmet03"</span>&gt;</span>テスト3<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<p>[CSS]</p>
+<pre class="hljs"><code><div><span class="hljs-selector-class">.emmet01</span> {
+    f
+    m
+    p
+    w
+    bd
+    c
+    bgc
+}
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 3-1</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードを記述し、Emmetの実行結果を表示させましょう。<br>
+</div>
+<br>
+<p>[CSS]</p>
+<pre class="hljs"><code><div><span class="hljs-selector-class">.emmet02</span> {
+    fz20
+    m10-20
+    p10p
+    bd2-solid
+    c-blue
+}
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 3-2</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードを記述し、Emmetの実行結果を表示させましょう。<br>
+</div>
+<p><br><br></p>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 3-3</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+下記の結果を得られる Emmetを記述し、結果を表示させましょう。<br>
+記述法が分からない場合は、上記コードや以下のURL先を参照しましょう。<br>
+<a href="https://docs.emmet.io/cheat-sheet/"  target="_blank">Emmet cheat sheet</a>
+1. font-size: 150%; <br>
+2. margin 20px 10px 10px 10px<br>
+3. padding 5% 10%<br>
+4. border: 2px dashed #000;<br>
+5. background-color: orange;<br>
+</div>
+<p><br><br></p>
+<h2 id="%E2%97%86-%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB%E3%81%AE%E5%84%AA%E5%85%88%E9%A0%86%E4%BD%8D">◆ スタイルの優先順位</h2>
+<p>CSS でセレクタに対してプロパティを設定する際に、有効範囲が重なる事があります。<br>
+この時、CSS のプロパティ値には優先順位があり、その順序に従って、HTML 要素は指定されます。<br>
+いくつかルールを示すと、</p>
+<ol>
+<li>後から記述されたものが優先される</li>
+<li>タイプセレクタよりも class セレクタが優先される (タグ名よりも class 属性が優先)</li>
+<li>id 属性と class 属性では id が優先される</li>
+</ol>
+<p>より詳細なルールもありますが、ここではタグよりも属性の方が優先(特に id 属性)と覚えておきましょう。</p>
+<p>[html]</p>
+<pre class="hljs"><code><div>div&gt;h1{title}+p.sample${text$}*3 p#id01.class02{test}
+</div></code></pre>
+<p><br><br><br></p>
+<p>[CSS]</p>
+<pre class="hljs"><code><div><span class="hljs-selector-tag">div</span> {
+    <span class="hljs-attribute">c</span>:yellow
+    c:red
+}
+
+<span class="hljs-selector-tag">p</span> {
+    <span class="hljs-attribute">c</span>:green
+}
+
+<span class="hljs-selector-class">.sample3</span> {
+    <span class="hljs-attribute">c</span>:blue
+}
+
+<span class="hljs-selector-id">#id01</span> {
+  <span class="hljs-attribute">c</span>: orange;
+}
+
+<span class="hljs-selector-class">.class02</span> {
+  <span class="hljs-attribute">c</span>: purple;
+}
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 3-4</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードを記述し、CSSの優先順位を確認しましょう。<br>
+なお、上記の記述は Emmet表記のため、その点に注意しましょう。
+</div>
+<br>
+<hr>
+<br>
+<p>お疲れ様でした！本章はここまでです。<br>
+CSS の Emmet は覚えるよりも慣れだと思いますので、<br>
+今後のコード作成で積極的に使っていきましょう。</p>
+<p><br><br><br></p>
+<h1 id="4%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%81%AE%E4%BD%9C%E6%88%90">4.フォームの作成</h1>
+<h2 id="html-%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%81%A8%E3%81%AF">HTML フォームとは</h2>
+<p>ユーザが「お問い合わせメール」や「検索ボックス」などへ<br>
+必要な項目を入力し、サイトやサーバへデータを送るしくみです。<br>
+今回はこのフォームの作り方について学習します。</p>
+<br>
+<img src="form.png">
+<p><br><br></p>
+<h2 id="%E2%97%86form-%E3%82%BF%E3%82%B0">◆form タグ</h2>
+<p>それでは、form タグについて学習しましょう。<br>
+form タグで以下に示すタグを囲い、入力場所を構成する部品を設置していきます。</p>
+<ul>
+<li>input タグ</li>
+<li>textarea タグ</li>
+<li>label タグ</li>
+<li>select タグ</li>
+<li>button タグ</li>
+</ul>
+<p>また form タグは <mark>action 属性</mark>を設定します。<br>
+action 属性では、送信ボタンをクリックした後の送信先を指定します。<br>
+※ いわゆるサーバー側のプログラムのため、今回は使用しません。</p>
+<br>
+<br>
+<h3 id="%E2%97%8Finput-%E3%82%BF%E3%82%B0">●input タグ</h3>
+<p>テキストや送信ボタン、チェックボックスなど、フォームの種類を<br>
+入力する際に用いるタグです。フォームの種類は、<mark>type 属性</mark> の値で<br>
+設定する事ができます。以下はその一例です。</p>
+<ul>
+<li>text</li>
+<li>number</li>
+<li>password</li>
+<li>submit</li>
+<li>date</li>
+<li>radio</li>
+<li>checkbox</li>
+<li>file</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"number"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"date"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"checkbox"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"button"</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"file"</span> /&gt;</span>
+</div></code></pre>
+<p>また、input タグは閉じタグがありません。各フォームについて<br>
+テキストを記載する場合は、後述する label タグを利用します。</p>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 4-1</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードを CodePenで記述し、結果を表示させましょう。<br>
+※ フォームが近くて見づらい場合は、コードの間に br タグを入れましょう。
+</div>
+<p>input タグは type 属性以外に <mark>name 属性</mark>を設定します。<br>
+id 属性や class 属性に近い利用用途です。後述する select 属性でも<br>
+出て来ますので、頭に入れておきましょう。</p>
+<br>
+<br>
+<h3 id="%E2%97%8Ftextarea-%E3%82%BF%E3%82%B0">●textarea タグ</h3>
+<p>名前の通りテキストエリアを表示するタグです。上記の input タグで<br>
+テキストフォームを記述しましたが、こちらはより多くのテキストを<br>
+入力する事が可能です。</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">name</span>=<span class="hljs-string">""</span> <span class="hljs-attr">id</span>=<span class="hljs-string">""</span> <span class="hljs-attr">cols</span>=<span class="hljs-string">"20"</span> <span class="hljs-attr">rows</span>=<span class="hljs-string">"10"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span>
+</div></code></pre>
+<p>cols 属性と rows 属性は、行数と列数を指定する属性です。</p>
+<br>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 4-2</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードを CodePenで記述し、結果を表示させましょう。<br>
+表示後、cols と rows属性の値を変化させ、結果を確認しましょう。
+</div>
+<br>
+<h3 id="%E2%97%8Flabel-%E3%82%BF%E3%82%B0">●label タグ</h3>
+<p>フォームを作る際に、テキストボックスやチェックボックス等の横に<br>
+文字を設置するタグです。label タグは指定方法が 2 通りあります。<br>
+(1)開始タグと終了タグでフォーム要素を挟んで記述<br>
+(2)for 属性とフォーム要素の id 属性を連携させる<br>
+以下のコード例を確認しましょう。</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>テキスト<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"name1"</span>&gt;</span>名前<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name1"</span> /&gt;</span>
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 4-3</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードを CodePenで記述し、結果を表示させましょう。<br>
+また、結果の「名前」をクリックし、テキストボックス内がアクティブに<br>
+なる事を確認しましょう。
+</div>
+<br>
+<h3 id="%E2%97%8Fselect-%E3%82%BF%E3%82%B0">●select タグ</h3>
+<p>セレクトボックス(メニュー)を作成するタグです。<br>
+<mark>size 属性</mark>で選択肢の表示行数を指定し、<br>
+選択肢は<mark>option タグ</mark> で作成します。
+select タグで option タグをみます。<br>
+option タグには <mark>value 属性</mark>があり、<br>
+select タグの name 属性と連携させる事でメニューができます。</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"fruits"</span> <span class="hljs-attr">size</span>=<span class="hljs-string">"1"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"fruits"</span>&gt;</span>apple<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"fruits"</span>&gt;</span>orange<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"fruits"</span>&gt;</span>peach<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"fruits"</span>&gt;</span>banana<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"fruits"</span>&gt;</span>grape<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 4-4</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードを CodePenで記述し、結果を表示させましょう。<br>
+また、Emmetを利用する場合は、option
+</div>
+<br>
+<h3 id="%E2%97%8Fbutton-%E3%82%BF%E3%82%B0">●button タグ</h3>
+<p>まずはボタンの作り方から学習しましょう。ボタンは <mark>button タグ</mark>を使います。<br>
+ページ上にクリック出来るボタンを設置し、以下 3 つの属性を指定できます。</p>
+<ul>
+<li>submit：フォーム等の情報を送信する</li>
+<li>reset：フォームの内容を削除する</li>
+<li>button：ボタンを作成する</li>
+</ul>
+<p>以下は 3 番目の button 属性のコードを記述しています。</p>
+<p>[html]</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"sample"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"button"</span>&gt;</span>ボタン<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</div></code></pre>
+<p>また、ボタンは CSS で見た目を整える事が可能です。</p>
+<p>[CSS]</p>
+<pre class="hljs"><code><div><span class="hljs-selector-class">.sample</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">20px</span>;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#49a9d4</span>;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">10px</span>;
+  <span class="hljs-comment">/* fz20, w200, h50, c, bgc, bdrs10 */</span>
+}
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 4-5</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードを CodePenで記述し、結果を表示させましょう。<br>
+この時、Emmetを利用して記述しましょう。<br>
+表示させた後、border-radiusを 30pxに変更しましょう。
+</div>
+<br>
+<br>
+<br>
+<h2 id="%E2%97%86-%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E9%96%A2%E9%80%A3%E3%82%BF%E3%82%B0%E3%81%AE-emmet">◆ フォーム関連タグの Emmet</h2>
+<p>ここまで、たくさんのタグを学習してきました。これらのタグに対しても、<br>
+Emmet を用いて記述する事が可能です。タグの復習を兼ねて記述しましょう。</p>
+<pre class="hljs"><code><div>input:t input:r input:c label[for=name1]{text}input:t[id=name1 select&gt;option
+select[name=sample size=1]&gt;[value="sample"]*3
+</div></code></pre>
+<br>
+<div style="height:12px;">
+<span style="margin-left:8px; padding:6px 10px; background:lightgreen; color:black; font-weight:bold;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">演習 4-6</span>
+</div>
+<div style="border:2px solid lightgreen; padding:25px 12px 10px; font-size:0.85em;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;">
+上記のコードを CodePenで記述し、結果を表示させましょう。<br>
+</div>
+<br>
+<p><br><br></p>
+<hr>
+<br>
+<p>本章はここまでです。<img class="emoji" alt="pencil2" src="data:image/png;base64,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" /> お疲れ様でした！</p>
+<p><a href="">HTML/CSS 学習テキスト(3)へ</a></p>
+
+</body>
+</html>
